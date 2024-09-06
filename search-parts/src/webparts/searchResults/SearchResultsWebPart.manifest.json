@@ -1,79 +1,80 @@
 {
-    "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
-    "id": "544c1372-42df-47c3-94d6-017428cd2baf",
-    "alias": "pnpSearchResultsWebPart",
-    "componentType": "WebPart",
-    "version": "*",
-    "manifestVersion": 2,
-    "requiresCustomScript": false,
-    "supportsFullBleed": true,
-    "supportedHosts": [
-        "SharePointWebPart",
-        "TeamsTab",
-        "SharePointFullPage",
-        "TeamsPersonalApp"
-    ],
-    "supportsThemeVariants": true,
-    "preconfiguredEntries": [
-        {
-            "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
-            "group": {
-                "default": "Other"
-            },
-            "title": {
-                "default": "PnP - Search Results",
-                "fr-fr": "PnP - Résultats de recherche",
-                "pl-pl": "PnP - Wyniki wyszukiwania",
-                "da-dk": "PnP - Søgeresultater",
-                "de-de": "PnP - Suchergebnisse",
-                "es-es": "PnP - Resultados de la búsqueda",
-                "fi-fi": "PnP - Hakutulokset",
-                "nb-no": "PnP - Søkeresultater",
-                "nl-nl": "PnP - Zoekresultaten",
-                "pt-br": "PnP - Procurar Resultados",
-                "sv-se": "PnP - Sökresultat",
-                "it-it": "PnP - Risultati di Ricerca"
-            },
-            "description": {
-                "default": "Displays JSON based data using customizable templates",
-                "fr-fr": "Affiche des données de multiples source de données au format JSON selon des modèles d'affichage personnalisables.",
-                "pl-pl": "Wyświetla dane typu JSON używając konfigurowalnych szablonów",
-                "it-it": "Visualizza dati basati su JSON utilizzando modelli personalizzabili"
-            },
-            "officeFabricIconFontName": "SearchAndApps",
-            "properties": {
-                "documentationLink": "https://microsoft-search.github.io/pnp-modern-search/",
-                "allowWebPartConnections": true
-            }
-        },
-        {
-            "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
-            "group": {
-                "default": "Other"
-            },
-            "title": {
-                "default": "PnP - Search Rollup",
-                "fr-fr": "PnP - Compilation de recherche",
-                "pl-pl": "PnP - Kompilacja wyszukiwania",
-                "da-dk": "PnP - Søgesamling",
-                "de-de": "PnP - Suchzusammenstellung",
-                "es-es": "PnP - Compilación de búsqueda",
-                "fi-fi": "PnP - Hakukokoelma",
-                "nb-no": "PnP - Søkesamling",
-                "nl-nl": "PnP - Zoekcompilatie",
-                "pt-br": "PnP - Compilação de pesquisa",
-                "sv-se": "PnP - Söksammanställning",
-                "it-it": "PnP - Riepilogo di Ricerca"
-            },
-            "description": {
-                "default": "To be used for content roll-up and allow lazy loading",
-                "it-it": "Da utilizzare per il riepilogo dei contenuti e per consentire il caricamento ritardato"
-            },
-            "officeFabricIconFontName": "SearchAndApps",
-            "properties": {
-                "documentationLink": "https://microsoft-search.github.io/pnp-modern-search/",
-                "allowWebPartConnections": false
-            }
-        }
-    ]
+   "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+   "id": "76630e8d-9f3a-4b9b-94b6-f2419aaab1df",
+   "alias": "iexpSearchResultsWebPart",
+   "componentType": "WebPart",
+   "version": "*",
+   "manifestVersion": 2,
+   "requiresCustomScript": false,
+   "supportsFullBleed": true,
+   "supportedHosts": [
+      "SharePointWebPart",
+      "TeamsTab",
+      "SharePointFullPage",
+      "TeamsPersonalApp"
+   ],
+   "supportsThemeVariants": true,
+   "preconfiguredEntries": [
+      {
+         "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+         "group": {
+            "default": "Other"
+         },
+         "title": {
+            "default": "IExp - Search Results",
+            "fr-fr": "IExp - Résultats de recherche",
+            "pl-pl": "IExp - Wyniki wyszukiwania",
+            "da-dk": "IExp - Søgeresultater",
+            "de-de": "IExp - Suchergebnisse",
+            "es-es": "IExp - Resultados de la búsqueda",
+            "fi-fi": "IExp - Hakutulokset",
+            "nb-no": "IExp - Søkeresultater",
+            "nl-nl": "IExp - Zoekresultaten",
+            "pt-br": "IExp - Procurar Resultados",
+            "sv-se": "IExp - Sökresultat",
+            "it-it": "IExp - Risultati di Ricerca"
+         },
+         "description": {
+            "default": "Displays JSON based data using customizable templates",
+            "fr-fr": "Affiche des données de multiples source de données au format JSON selon des modèles d'affichage personnalisables.",
+            "pl-pl": "Wyświetla dane typu JSON używając konfigurowalnych szablonów",
+            "it-it": "Visualizza dati basati su JSON utilizzando modelli personalizzabili"
+         },
+         "officeFabricIconFontName": "SearchAndApps",
+         "properties": {
+            "documentationLink": "https://microsoft-search.github.io/pnp-modern-search/",
+            "allowWebPartConnections": true,
+            "enableAnalytics": true
+         }
+      },
+      {
+         "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+         "group": {
+            "default": "Other"
+         },
+         "title": {
+            "default": "IExp - Search Rollup",
+            "fr-fr": "IExp - Compilation de recherche",
+            "pl-pl": "IExp - Kompilacja wyszukiwania",
+            "da-dk": "IExp - Søgesamling",
+            "de-de": "IExp - Suchzusammenstellung",
+            "es-es": "IExp - Compilación de búsqueda",
+            "fi-fi": "IExp - Hakukokoelma",
+            "nb-no": "IExp - Søkesamling",
+            "nl-nl": "IExp - Zoekcompilatie",
+            "pt-br": "IExp - Compilação de pesquisa",
+            "sv-se": "IExp - Söksammanställning",
+            "it-it": "IExp - Riepilogo di Ricerca"
+         },
+         "description": {
+            "default": "To be used for content roll-up and allow lazy loading",
+            "it-it": "Da utilizzare per il riepilogo dei contenuti e per consentire il caricamento ritardato"
+         },
+         "officeFabricIconFontName": "SearchAndApps",
+         "properties": {
+            "documentationLink": "https://microsoft-search.github.io/pnp-modern-search/",
+            "allowWebPartConnections": false
+         }
+      }
+   ]
 }

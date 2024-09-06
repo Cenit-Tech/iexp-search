@@ -1,6 +1,11 @@
 {
-    "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/spfx-serve.schema.json",
-    "port": 4321,
-    "https": true,
-    "initialPage": "https://{tenantDomain}/_layouts/workbench.aspx"
+   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/spfx-serve.schema.json",
+   "port": 4321,
+   "https": true,
+   "initialPage": "https://m7kk.sharepoint.com//_layouts/workbench.aspx",
+   "serveConfigurations": {
+      "default": {
+         "pageUrl": "https://m7kk.sharepoint.com/sites/IExpSearch/sitepages/home.aspx"
+      }
+   }
 }

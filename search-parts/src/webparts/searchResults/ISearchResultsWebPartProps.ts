@@ -1,193 +1,208 @@
-import { ITemplateSlot, LayoutRenderType } from "@pnp/modern-search-extensibility";
-import { IDataResultType } from "../../models/common/IDataResultType";
-import { IPagingSettings } from "../../models/common/IPagingSettings";
-import { IBaseWebPartProps } from "../../models/common/IBaseWebPartProps";
 import { DynamicProperty } from "@microsoft/sp-component-base";
+import {
+   ITemplateSlot,
+   LayoutRenderType,
+} from "@pnp/modern-search-extensibility";
+import { IBaseWebPartProps } from "../../models/common/IBaseWebPartProps";
+import { IDataResultType } from "../../models/common/IDataResultType";
 import { IExtensibilityConfiguration } from "../../models/common/IExtensibilityConfiguration";
 import { IItemSelectionProps } from "../../models/common/IItemSelectionProps";
+import { IPagingSettings } from "../../models/common/IPagingSettings";
 import { IQueryModifierConfiguration } from "../../queryModifier/IQueryModifierConfiguration";
 
 export enum QueryTextSource {
-    StaticValue,
-    DynamicValue
+   StaticValue,
+   DynamicValue,
 }
 
 export default interface ISearchResultsWebPartProps extends IBaseWebPartProps {
+   /**
+    * The selected data source key
+    */
+   dataSourceKey: string;
 
-    /**
-     * The selected data source key
-     */
-    dataSourceKey: string;
+   /**
+    * The data source properties. We need a weel identified property to isolate data sources (avoid playing in the root property bag values)
+    */
+   dataSourceProperties: {
+      [key: string]: any;
+   };
 
-    /**
-     * The data source properties. We need a weel identified property to isolate data sources (avoid playing in the root property bag values)
-     */
-    dataSourceProperties: {
-        [key: string]: any
-    };
+   /**
+    * The selected layout key
+    */
+   selectedLayoutKey: string;
 
-    /**
-     * The selected layout key
-     */
-    selectedLayoutKey: string;
+   /**
+    * External template URL
+    */
+   externalTemplateUrl: string;
 
-    /**
-     * External template URL
-     */
-    externalTemplateUrl: string;
+   /**
+    * Content of the template if customized inline (i.e. without external file of custom layout)
+    */
+   inlineTemplateContent: string;
 
-    /**
-     * Content of the template if customized inline (i.e. without external file of custom layout)
-     */
-    inlineTemplateContent: string;
+   /**
+    * Indicates if the selected filters should be displayed
+    */
+   showSelectedFilters: boolean;
 
-    /**
-     * Indicates if the selected filters should be displayed
-     */
-    showSelectedFilters: boolean;
+   /**
+    * Indicates if the current results count should be displayed
+    */
+   showResultsCount: boolean;
 
-    /**
-     * Indicates if the current results count should be displayed 
-     */
-    showResultsCount: boolean;
+   /**
+    * Enable/Disabled the use of Microsoft Graph Toolkit
+    */
+   useMicrosoftGraphToolkit: boolean;
 
-    /**
-     * Enable/Disabled the use of Microsoft Graph Toolkit
-     */
-    useMicrosoftGraphToolkit: boolean;
+   /**
+    * The layout properties
+    */
+   layoutProperties: {
+      /**
+       * Any other property from layouts (builtin + custom)
+       */
+      [key: string]: any;
+   };
 
-    /**
-     * The layout properties
-     */
-    layoutProperties: {
+   /**
+    * The layout type
+    */
+   layoutRenderType: LayoutRenderType;
 
-        /**
-         * Any other property from layouts (builtin + custom)
-         */
-        [key: string]: any;
-    };
+   /**
+    * Adaptive cards host config
+    */
+   adaptiveCardsHostConfig: string;
 
-    /**
-     * The layout type
-     */
-    layoutRenderType: LayoutRenderType;
+   /**
+    * Current version of the Web Part (set by CI)
+    */
+   version: string;
 
-    /**
-     * Adaptive cards host config
-     */
-    adaptiveCardsHostConfig: string;
+   /**
+    * The result types for template
+    */
+   resultTypes: IDataResultType[];
 
-    /**
-     * Current version of the Web Part (set by CI)
-     */
-    version: string;
+   /**
+    * The Web Part paging settings
+    */
+   paging: IPagingSettings;
 
-    /**
-     * The result types for template
-     */
-    resultTypes: IDataResultType[];
+   /**
+    * Determines if the Web Part should use filters component connection
+    */
+   useFilters: boolean;
 
-    /**
-     * The Web Part paging settings
-     */
-    paging: IPagingSettings;
+   /**
+    * Determines if the Web Part should use an input query text from a static field value or a dynamic data source on the current page
+    */
+   useInputQueryText: boolean;
 
-    /**
-     * Determines if the Web Part should use filters component connection
-     */
-    useFilters: boolean;
+   /**
+    * Determines if the Web Part should use search verticals from an other Web Part
+    */
+   useVerticals: boolean;
 
-    /**
-     * Determines if the Web Part should use an input query text from a static field value or a dynamic data source on the current page
-     */
-    useInputQueryText: boolean;
+   /**
+    * Determines if the Web Part should use data from other Search Results Web Parts on the page.
+    */
+   useDynamicFiltering: boolean;
 
-    /**
-     * Determines if the Web Part should use search verticals from an other Web Part
-     */
-    useVerticals: boolean;
+   /**
+    * Dynamic data connection references for filters
+    */
+   filtersDataSourceReference: string;
 
-    /**
-     * Determines if the Web Part should use data from other Search Results Web Parts on the page. 
-     */
-    useDynamicFiltering: boolean;
+   /**
+    * Dynamic data connection references for verticals
+    */
+   verticalsDataSourceReference: string;
 
-    /**
-     * Dynamic data connection references for filters
-     */
-    filtersDataSourceReference: string;
+   /**
+    * Disable dynamic data to allow SPFx lazy load
+    */
+   allowWebPartConnections: boolean;
 
-    /**
-     * Dynamic data connection references for verticals
-     */
-    verticalsDataSourceReference: string;
+   /**
+    * The selected vertical fro the Web Part
+    */
+   selectedVerticalKeys: string[];
 
-    /**
-     * Disable dynamic data to allow SPFx lazy load
-     */
-    allowWebPartConnections: boolean;
+   /**
+    * Configured slots for the current data source
+    */
+   templateSlots: ITemplateSlot[];
 
-    /**
-     * The selected vertical fro the Web Part
-     */
-    selectedVerticalKeys: string[];
+   /**
+    * The input query text to pass to the data sources
+    */
+   queryText: DynamicProperty<string>;
 
-    /**
-     * Configured slots for the current data source
-     */
-    templateSlots: ITemplateSlot[];
+   /**
+    * Indicates ifthe query text comes from a static or dynamic value
+    */
+   queryTextSource: QueryTextSource;
 
-    /**
-     * The input query text to pass to the data sources
-     */
-    queryText: DynamicProperty<string>;
+   /**
+    * Flag indicating if a default query text should be applied
+    */
+   useDefaultQueryText: boolean;
 
-    /**
-     * Indicates ifthe query text comes from a static or dynamic value
-     */
-    queryTextSource: QueryTextSource;
+   /**
+    *  The default query text to apply
+    */
+   defaultQueryText: string;
 
-    /**
-     * Flag indicating if a default query text should be applied
-     */
-    useDefaultQueryText: boolean;
+   /**
+    * Flag indicating if the component should show nothing
+    */
+   showBlankIfNoResult: boolean;
 
-    /**
-     *  The default query text to apply
-     */
-    defaultQueryText: string;
+   /**
+    * The extensibility configuraion to load
+    */
+   extensibilityLibraryConfiguration: IExtensibilityConfiguration[];
 
-    /**
-     * Flag indicating if the component should show nothing
-     */
-    showBlankIfNoResult: boolean;
+   /**
+    * The item selection settings
+    */
+   itemSelectionProps: IItemSelectionProps;
 
-    /**
-     * The extensibility configuraion to load
-     */
-    extensibilityLibraryConfiguration: IExtensibilityConfiguration[];
+   /**
+    * The data source field values when an item is selected
+    * Can't be a nested property to be able to use with OOTB Dynamic Data property pane fields
+    */
+   selectedItemFieldValue: DynamicProperty<string>;
 
-    /**
-     * The item selection settings
-     */
-    itemSelectionProps: IItemSelectionProps;
+   /**
+    * The queryModifier properties
+    */
+   queryModifierProperties: {
+      [key: string]: any;
+   };
 
-    /**
-     * The data source field values when an item is selected
-     * Can't be a nested property to be able to use with OOTB Dynamic Data property pane fields  
-     */
-    selectedItemFieldValue: DynamicProperty<string>;
-
-    /**
-     * The queryModifier properties
-     */
-    queryModifierProperties: {
-        [key: string]: any;
-    };
-
-    /**
+   /**
     * Selected query modifier definition
     */
-    queryModifierConfiguration: IQueryModifierConfiguration[];
-}
+   queryModifierConfiguration: IQueryModifierConfiguration[];
 
+   /**
+    * Analytics Site Url (Information EXP)
+    */
+   analyticsSiteUrl: string;
+
+   /**
+    * Analytics List Name (Information EXP)
+    */
+   analyticsListName: string;
+
+   /**
+    * Enable Information EXP analytics
+    */
+   enableAnalytics: boolean;
+}

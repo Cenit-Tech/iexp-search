@@ -1,33 +1,46 @@
-import * as React from 'react';
-import { ISearchBoxContainerProps } from './ISearchBoxContainerProps';
-import { QueryPathBehavior, UrlHelper, PageOpenBehavior } from '../../../helpers/UrlHelper';
-import { MessageBar, MessageBarType, SearchBox, IconButton, ISearchBox } from '@fluentui/react';
-import { ISearchBoxContainerState } from './ISearchBoxContainerState';
-import { isEqual } from '@microsoft/sp-lodash-subset';
-import * as webPartStrings from 'SearchBoxWebPartStrings';
-import SearchBoxAutoComplete from './SearchBoxAutoComplete/SearchBoxAutoComplete';
-import styles from './SearchBoxContainer.module.scss';
-import { BuiltinTokenNames } from '../../../services/tokenService/TokenService';
-import { isEmpty } from '@microsoft/sp-lodash-subset';
-import { WebPartTitle } from '@pnp/spfx-controls-react/lib/WebPartTitle';
+import {
+   IconButton,
+   ISearchBox,
+   MessageBar,
+   MessageBarType,
+   SearchBox,
+} from "@fluentui/react";
+import { isEmpty, isEqual } from "@microsoft/sp-lodash-subset";
+import { WebPartTitle } from "@pnp/spfx-controls-react/lib/WebPartTitle";
+import * as React from "react";
+import * as webPartStrings from "SearchBoxWebPartStrings";
+import {
+   PageOpenBehavior,
+   QueryPathBehavior,
+   UrlHelper,
+} from "../../../helpers/UrlHelper";
+import { BuiltinTokenNames } from "../../../services/tokenService/TokenService";
+import { ISearchBoxContainerProps } from "./ISearchBoxContainerProps";
+import { ISearchBoxContainerState } from "./ISearchBoxContainerState";
+import SearchBoxAutoComplete from "./SearchBoxAutoComplete/SearchBoxAutoComplete";
+import styles from "./SearchBoxContainer.module.scss";
 
-export default class SearchBoxContainer extends React.Component<ISearchBoxContainerProps, ISearchBoxContainerState> {
+export default class SearchBoxContainer extends React.Component<
+   ISearchBoxContainerProps,
+   ISearchBoxContainerState
+> {
+   public constructor(props: ISearchBoxContainerProps) {
+      super(props);
 
-    public constructor(props: ISearchBoxContainerProps) {
+      this.state = {
+         searchInputValue: props.inputValue
+            ? decodeURIComponent(props.inputValue)
+            : "",
+         errorMessage: null,
+         showClearButton: !!props.inputValue,
+      };
 
-        super(props);
+      this._onSearch = this._onSearch.bind(this);
+   }
 
-        this.state = {
-            searchInputValue: (props.inputValue) ? decodeURIComponent(props.inputValue) : '',
-            errorMessage: null,
-            showClearButton: !!props.inputValue,
-        };
-
-        this._onSearch = this._onSearch.bind(this);
-    }
-
-    private renderSearchBoxWithAutoComplete(): JSX.Element {
-        return <SearchBoxAutoComplete
+   private renderSearchBoxWithAutoComplete(): JSX.Element {
+      return (
+         <SearchBoxAutoComplete
             inputValue={this.props.inputValue}
             onSearch={this._onSearch}
             placeholderText={this.props.placeholderText}
@@ -35,151 +48,180 @@ export default class SearchBoxContainer extends React.Component<ISearchBoxContai
             themeVariant={this.props.themeVariant}
             domElement={this.props.domElement}
             numberOfSuggestionsPerGroup={this.props.numberOfSuggestionsPerGroup}
-        />;
-    }
+         />
+      );
+   }
 
-    private renderBasicSearchBox(): JSX.Element {
+   private renderBasicSearchBox(): JSX.Element {
+      let searchBoxRef = React.createRef<ISearchBox>();
 
-        let searchBoxRef = React.createRef<ISearchBox>();
+      return (
+         <div className={styles.searchBoxWrapper}>
+            <SearchBox
+               componentRef={searchBoxRef}
+               placeholder={
+                  this.props.placeholderText
+                     ? this.props.placeholderText
+                     : webPartStrings.SearchBox.DefaultPlaceholder
+               }
+               ariaLabel={
+                  this.props.placeholderText
+                     ? this.props.placeholderText
+                     : webPartStrings.SearchBox.DefaultPlaceholder
+               }
+               className={styles.searchTextField}
+               value={this.state.searchInputValue}
+               autoComplete="off"
+               onChange={(event) => {
+                  const newInputValue =
+                     event && event.currentTarget
+                        ? event.currentTarget.value
+                        : "";
+                  const inputChanged =
+                     !isEmpty(this.state.searchInputValue) &&
+                     isEmpty(newInputValue);
 
-        return (
-            <div className={styles.searchBoxWrapper}>
-                <SearchBox
-                    componentRef={searchBoxRef}
-                    placeholder={this.props.placeholderText ? this.props.placeholderText : webPartStrings.SearchBox.DefaultPlaceholder}
-                    ariaLabel={this.props.placeholderText ? this.props.placeholderText : webPartStrings.SearchBox.DefaultPlaceholder}
-                    className={styles.searchTextField}
-                    value={this.state.searchInputValue}
-                    autoComplete="off"
-                    onChange={(event) => {
-                        const newInputValue = event && event.currentTarget ? event.currentTarget.value : "";
-                        const inputChanged = !isEmpty(this.state.searchInputValue) && isEmpty(newInputValue);
-
-                        if (this.props.reQueryOnClear && inputChanged) {
-                            this._onSearch('', true);
-                            searchBoxRef.current.focus();
-                        } else {
-                            this.setState({ searchInputValue: newInputValue });
-                        }
-                    }}
-                    onSearch={() => this._onSearch(this.state.searchInputValue)}
-                    onClear={() => {
-                        this._onSearch('', true);
-                        searchBoxRef.current.focus();
-                    }}
-                />
-                <div className={styles.searchButton}>
-                    {this.state.searchInputValue &&
-                        <IconButton
-                            onClick={() => this._onSearch(this.state.searchInputValue)}
-                            iconProps={{ iconName: 'Forward' }}
-                            ariaLabel={webPartStrings.SearchBox.SearchButtonLabel}
-                        />
-                    }
-                </div>
+                  if (this.props.reQueryOnClear && inputChanged) {
+                     this._onSearch("", true);
+                     searchBoxRef.current.focus();
+                  } else {
+                     this.setState({ searchInputValue: newInputValue });
+                  }
+               }}
+               onSearch={() => this._onSearch(this.state.searchInputValue)}
+               onClear={() => {
+                  this._onSearch("", true);
+                  searchBoxRef.current.focus();
+               }}
+            />
+            <div className={styles.searchButton}>
+               {this.state.searchInputValue && (
+                  <IconButton
+                     onClick={() => this._onSearch(this.state.searchInputValue)}
+                     iconProps={{ iconName: "Forward" }}
+                     ariaLabel={webPartStrings.SearchBox.SearchButtonLabel}
+                  />
+               )}
             </div>
-        );
-    }
+         </div>
+      );
+   }
 
-    /**
-     * Handler when a user enters new keywords
-     * @param queryText The query text entered by the user
-     */
-    public async _onSearch(queryText: string, isReset: boolean = false) {
+   /**
+    * Handler when a user enters new keywords
+    * @param queryText The query text entered by the user
+    */
+   public async _onSearch(queryText: string, isReset: boolean = false) {
+      // Don't send empty value
+      if (queryText || isReset) {
+         this.setState({
+            searchInputValue: queryText,
+            showClearButton: !isReset,
+         });
 
-        // Don't send empty value
-        if (queryText || isReset) {
+         if (this.props.searchInNewPage && !isReset && this.props.pageUrl) {
+            this.props.tokenService.setTokenValue(
+               BuiltinTokenNames.inputQueryText,
+               queryText
+            );
+            queryText = await this.props.tokenService.resolveTokens(
+               this.props.inputTemplate
+            );
+            const urlEncodedQueryText = encodeURIComponent(queryText);
 
-            this.setState({
-                searchInputValue: queryText,
-                showClearButton: !isReset
-            });
+            const tokenizedPageUrl =
+               await this.props.tokenService.resolveTokens(this.props.pageUrl);
+            const searchUrl = new URL(tokenizedPageUrl);
 
-            if (this.props.searchInNewPage && !isReset && this.props.pageUrl) {
+            let newUrl;
 
-                this.props.tokenService.setTokenValue(BuiltinTokenNames.inputQueryText, queryText);
-                queryText = await this.props.tokenService.resolveTokens(this.props.inputTemplate);
-                const urlEncodedQueryText = encodeURIComponent(queryText);
-
-                const tokenizedPageUrl = await this.props.tokenService.resolveTokens(this.props.pageUrl);
-                const searchUrl = new URL(tokenizedPageUrl);
-
-                let newUrl;
-
-                if (this.props.queryPathBehavior === QueryPathBehavior.URLFragment) {
-                    searchUrl.hash = urlEncodedQueryText;
-                    newUrl = searchUrl.href;
-                }
-                else {
-                    newUrl = UrlHelper.addOrReplaceQueryStringParam(searchUrl.href, this.props.queryStringParameter, queryText, true);
-                }
-
-                // Send the query to the new page
-                const behavior = this.props.openBehavior === PageOpenBehavior.NewTab ? '_blank' : '_self';
-                window.open(newUrl, behavior);
-
+            if (
+               this.props.queryPathBehavior === QueryPathBehavior.URLFragment
+            ) {
+               searchUrl.hash = urlEncodedQueryText;
+               newUrl = searchUrl.href;
             } else {
-
-                // Notify the dynamic data controller
-                this.props.onSearch(queryText);
-            }
-        }
-    }
-
-
-    public componentDidUpdate(prevProps: ISearchBoxContainerProps, prevState: ISearchBoxContainerState) {
-
-        if (!isEqual(prevProps.inputValue, this.props.inputValue)) {
-
-            let query = this.props.inputValue;
-            try {
-                query = decodeURIComponent(this.props.inputValue);
-
-            } catch (error) {
-                // Likely issue when q=%25 in spfx
+               newUrl = UrlHelper.addOrReplaceQueryStringParam(
+                  searchUrl.href,
+                  this.props.queryStringParameter,
+                  queryText,
+                  true
+               );
             }
 
-            this.setState({
-                searchInputValue: query,
-            });
-        }
-    }
+            // Send the query to the new page
+            const behavior =
+               this.props.openBehavior === PageOpenBehavior.NewTab
+                  ? "_blank"
+                  : "_self";
+            window.open(newUrl, behavior);
+         } else {
+            // Notify the dynamic data controller
+            this.props.onSearch(queryText);
+         }
+      }
+   }
 
-    public render(): React.ReactElement<ISearchBoxContainerProps> {
+   public componentDidUpdate(
+      prevProps: ISearchBoxContainerProps,
+      prevState: ISearchBoxContainerState
+   ) {
+      if (!isEqual(prevProps.inputValue, this.props.inputValue)) {
+         let query = this.props.inputValue;
+         try {
+            query = decodeURIComponent(this.props.inputValue);
+         } catch (error) {
+            // Likely issue when q=%25 in spfx
+         }
 
-        let renderTitle: JSX.Element = null;
+         this.setState({
+            searchInputValue: query,
+         });
+      }
+   }
 
-        // WebPart title
-        renderTitle = <WebPartTitle
-                        displayMode={this.props.webPartTitleProps.displayMode}
-                        title={this.props.webPartTitleProps.title}
-                        updateProperty={this.props.webPartTitleProps.updateProperty}
-                        className={this.props.webPartTitleProps.className} />;
+   public render(): React.ReactElement<ISearchBoxContainerProps> {
+      let renderTitle: JSX.Element = null;
 
-        let renderErrorMessage: JSX.Element = null;
+      // WebPart title
+      renderTitle = (
+         <WebPartTitle
+            displayMode={this.props.webPartTitleProps.displayMode}
+            title={this.props.webPartTitleProps.title}
+            updateProperty={this.props.webPartTitleProps.updateProperty}
+            className={this.props.webPartTitleProps.className}
+         />
+      );
 
-        if (this.state.errorMessage) {
-            renderErrorMessage = <MessageBar messageBarType={MessageBarType.error}
-                dismissButtonAriaLabel='Close'
-                isMultiline={false}
-                onDismiss={() => {
-                    this.setState({
-                        errorMessage: null,
-                    });
-                }}
-                className={styles.errorMessage}>
-                {this.state.errorMessage}</MessageBar>;
-        }
+      let renderErrorMessage: JSX.Element = null;
 
-        const renderSearchBox = this.props.enableQuerySuggestions ?
-            this.renderSearchBoxWithAutoComplete() :
-            this.renderBasicSearchBox();
-        return (
-            <div className={styles.searchBox}>
-                {renderErrorMessage}
-                {renderTitle}
-                {renderSearchBox}
-            </div>
-        );
-    }
+      if (this.state.errorMessage) {
+         renderErrorMessage = (
+            <MessageBar
+               messageBarType={MessageBarType.error}
+               dismissButtonAriaLabel="Close"
+               isMultiline={false}
+               onDismiss={() => {
+                  this.setState({
+                     errorMessage: null,
+                  });
+               }}
+               className={styles.errorMessage}
+            >
+               {this.state.errorMessage}
+            </MessageBar>
+         );
+      }
+
+      const renderSearchBox = this.props.enableQuerySuggestions
+         ? this.renderSearchBoxWithAutoComplete()
+         : this.renderBasicSearchBox();
+      return (
+         <div className={styles.searchBox}>
+            {renderErrorMessage}
+            {renderTitle}
+            {renderSearchBox}
+         </div>
+      );
+   }
 }

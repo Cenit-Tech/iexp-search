@@ -1,38 +1,40 @@
 {
-    "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
-    "solution": {
-        "name": "PnP Modern Search - Search Extensibility Library Core",
-        "id": "f13a5866-004f-4219-b078-69731f848bd1",
-        "version": "4.0.0.0",
-        "includeClientSideAssets": true,
-        "skipFeatureDeployment": true,
-        "isDomainIsolated": false,
-        "metadata": {
-            "shortDescription": {
-                "default": "PnP Modern Search - Search Extensibility Library Core"
-            },
-            "longDescription": {
-                "default": "PnP Modern Search - Search Extensibility Library Core"
-            },
-            "screenshotPaths": [],
-            "videoUrl": "",
-            "categories": []
-        },
-        "features": [{
-            "title": "PnP Modern Search - Search Extensibility Library Core",
-            "description": "PnP Modern Search - Search Extensibility Library Core",
+   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+   "solution": {
+      "name": "Information EXP - Search Extensibility Library Core",
+      "id": "390eda25-94e3-4689-9fb1-e32cce5a2a2b",
+      "version": "4.0.0.1",
+      "includeClientSideAssets": true,
+      "skipFeatureDeployment": true,
+      "isDomainIsolated": false,
+      "metadata": {
+         "shortDescription": {
+            "default": "Information EXP - Search Extensibility Library Core"
+         },
+         "longDescription": {
+            "default": "Information EXP - Search Extensibility Library Core"
+         },
+         "screenshotPaths": [],
+         "videoUrl": "",
+         "categories": []
+      },
+      "features": [
+         {
+            "title": "Information EXP - Search Extensibility Library Core",
+            "description": "Information EXP - Search Extensibility Library Core",
             "id": "52798f01-1487-43ea-bc88-95538147cb8d",
-            "version": "4.0.0.0"
-        }],
-        "developer": {
-            "mpnId": "",
-            "name": "PnP Team",
-            "termsOfUseUrl": "",
-            "privacyUrl": "",
-            "websiteUrl": "https://pnp.github.io/"
-        }
-    },
-    "paths": {
-        "zippedPackage": "solution/pnp-modern-search-extensibility.sppkg"
-    }
+            "version": "4.0.0.1"
+         }
+      ],
+      "developer": {
+         "mpnId": "",
+         "name": "Information EXP",
+         "termsOfUseUrl": "",
+         "privacyUrl": "",
+         "websiteUrl": "https://pnp.github.io/"
+      }
+   },
+   "paths": {
+      "zippedPackage": "solution/iexp-search-extensibility.sppkg"
+   }
 }
