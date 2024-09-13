@@ -58,6 +58,12 @@ export class TemplateRenderer extends React.Component<
 
    public async componentDidMount() {
       await this.updateTemplate(this.props);
+
+      if (this.props.analyticsService) {
+         this.props.analyticsService.addResultHooks(
+            this._divTemplateRenderer.current
+         );
+      }
    }
 
    public async componentDidUpdate(prevProps: ITemplateRendererProps) {
@@ -93,6 +99,13 @@ export class TemplateRenderer extends React.Component<
          )
       ) {
          await this.updateTemplate(this.props);
+
+         // Likely this is a change of page!
+         if (this.props.analyticsService) {
+            this.props.analyticsService.addResultHooks(
+               this._divTemplateRenderer.current
+            );
+         }
       }
    }
 
@@ -165,11 +178,14 @@ export class TemplateRenderer extends React.Component<
             });
          }
 
-         this._divTemplateRenderer.current.innerHTML = `<style>${allStyles.join(
-            " "
-         )}</style><div id="${this.props.templateService.TEMPLATE_ID_PREFIX}${
+         this._divTemplateRenderer.current.innerHTML = `<style id='st_template_renderer_${
             this.props.instanceId
-         }">${templateAsHtml.body.innerHTML}</div>`;
+         }'>
+         ${allStyles.join(" ")}</style>
+         <div id="${this.props.templateService.TEMPLATE_ID_PREFIX}${
+            this.props.instanceId
+         }">${templateAsHtml.body.innerHTML}
+         </div>`;
       } else if (
          props.renderType == LayoutRenderType.AdaptiveCards &&
          template instanceof HTMLElement

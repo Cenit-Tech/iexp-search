@@ -1,7 +1,7 @@
 {
    "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
    "id": "76630e8d-9f3a-4b9b-94b6-f2419aaab1df",
-   "alias": "iexpSearchResultsWebPart",
+   "alias": "IEXPSearchResultsWebPart",
    "componentType": "WebPart",
    "version": "*",
    "manifestVersion": 2,
@@ -21,18 +21,18 @@
             "default": "Other"
          },
          "title": {
-            "default": "IExp - Search Results",
-            "fr-fr": "IExp - Résultats de recherche",
-            "pl-pl": "IExp - Wyniki wyszukiwania",
-            "da-dk": "IExp - Søgeresultater",
-            "de-de": "IExp - Suchergebnisse",
-            "es-es": "IExp - Resultados de la búsqueda",
-            "fi-fi": "IExp - Hakutulokset",
-            "nb-no": "IExp - Søkeresultater",
-            "nl-nl": "IExp - Zoekresultaten",
-            "pt-br": "IExp - Procurar Resultados",
-            "sv-se": "IExp - Sökresultat",
-            "it-it": "IExp - Risultati di Ricerca"
+            "default": "IEXP - Search Results",
+            "fr-fr": "IEXP - Résultats de recherche",
+            "pl-pl": "IEXP - Wyniki wyszukiwania",
+            "da-dk": "IEXP - Søgeresultater",
+            "de-de": "IEXP - Suchergebnisse",
+            "es-es": "IEXP - Resultados de la búsqueda",
+            "fi-fi": "IEXP - Hakutulokset",
+            "nb-no": "IEXP - Søkeresultater",
+            "nl-nl": "IEXP - Zoekresultaten",
+            "pt-br": "IEXP - Procurar Resultados",
+            "sv-se": "IEXP - Sökresultat",
+            "it-it": "IEXP - Risultati di Ricerca"
          },
          "description": {
             "default": "Displays JSON based data using customizable templates",
@@ -40,11 +40,12 @@
             "pl-pl": "Wyświetla dane typu JSON używając konfigurowalnych szablonów",
             "it-it": "Visualizza dati basati su JSON utilizzando modelli personalizzabili"
          },
-         "officeFabricIconFontName": "SearchAndApps",
+         "iconImageUrl": "data:image/png;base64,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",
          "properties": {
             "documentationLink": "https://microsoft-search.github.io/pnp-modern-search/",
             "allowWebPartConnections": true,
-            "enableAnalytics": true
+            "enableAnalytics": true,
+            "analyticsMustHaveQueryText": true
          }
       },
       {
@@ -53,24 +54,24 @@
             "default": "Other"
          },
          "title": {
-            "default": "IExp - Search Rollup",
-            "fr-fr": "IExp - Compilation de recherche",
-            "pl-pl": "IExp - Kompilacja wyszukiwania",
-            "da-dk": "IExp - Søgesamling",
-            "de-de": "IExp - Suchzusammenstellung",
-            "es-es": "IExp - Compilación de búsqueda",
-            "fi-fi": "IExp - Hakukokoelma",
-            "nb-no": "IExp - Søkesamling",
-            "nl-nl": "IExp - Zoekcompilatie",
-            "pt-br": "IExp - Compilação de pesquisa",
-            "sv-se": "IExp - Söksammanställning",
-            "it-it": "IExp - Riepilogo di Ricerca"
+            "default": "IEXP - Search Rollup",
+            "fr-fr": "IEXP - Compilation de recherche",
+            "pl-pl": "IEXP - Kompilacja wyszukiwania",
+            "da-dk": "IEXP - Søgesamling",
+            "de-de": "IEXP - Suchzusammenstellung",
+            "es-es": "IEXP - Compilación de búsqueda",
+            "fi-fi": "IEXP - Hakukokoelma",
+            "nb-no": "IEXP - Søkesamling",
+            "nl-nl": "IEXP - Zoekcompilatie",
+            "pt-br": "IEXP - Compilação de pesquisa",
+            "sv-se": "IEXP - Söksammanställning",
+            "it-it": "IEXP - Riepilogo di Ricerca"
          },
          "description": {
             "default": "To be used for content roll-up and allow lazy loading",
             "it-it": "Da utilizzare per il riepilogo dei contenuti e per consentire il caricamento ritardato"
          },
-         "officeFabricIconFontName": "SearchAndApps",
+         "iconImageUrl": "data:image/png;base64,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",
          "properties": {
             "documentationLink": "https://microsoft-search.github.io/pnp-modern-search/",
             "allowWebPartConnections": false

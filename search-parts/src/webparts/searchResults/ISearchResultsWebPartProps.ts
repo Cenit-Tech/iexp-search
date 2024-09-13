@@ -205,4 +205,6 @@ export default interface ISearchResultsWebPartProps extends IBaseWebPartProps {
     * Enable Information EXP analytics
     */
    enableAnalytics: boolean;
+
+   analyticsMustHaveQueryText: boolean;
 }

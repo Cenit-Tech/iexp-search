@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2022/09/ProvisioningSchema">
+  <pnp:Preferences Generator="PnP.Framework, Version=1.17.30.0, Culture=neutral, PublicKeyToken=0d501f89f11b748c" />
+  <pnp:Templates ID="CONTAINER-TEMPLATE-EE0EC15052074CB597EA7CF22DE52688">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-EE0EC15052074CB597EA7CF22DE52688" Version="1" BaseSiteTemplate="SITEPAGEPUBLISHING#0" Scope="RootSite">
+      <pnp:Lists>
+        <pnp:ListInstance Title="Search Analytics" Description="System list for Information EXP search analytics" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/Search Analytics" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableAttachments="false" EnableFolderCreation="false" NoCrawl="true" DefaultDisplayFormUrl="{site}/Lists/Search Analytics/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/Search Analytics/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/Search Analytics/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{EC796F66-3203-426C-A745-AC3C51A20B96}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/Search Analytics/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="Created" Ascending="FALSE" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="QueryId" />
+                <FieldRef Name="Created" />
+                <FieldRef Name="Source" />
+                <FieldRef Name="Action" />
+                <FieldRef Name="QueryText" />
+                <FieldRef Name="ResultCount" />
+                <FieldRef Name="Page" />
+                <FieldRef Name="URL" />
+                <FieldRef Name="ActionUrl" />
+                <FieldRef Name="ActionValue" />
+                <FieldRef Name="AdditionalInfo" />
+                <FieldRef Name="Author" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+              <ColumnWidth>
+                <FieldRef Name="ResultCount" width="174.16827392578125" />
+                <FieldRef Name="Created" width="157.1500244140625" />
+                <FieldRef Name="URL" width="287.0091552734375" />
+                <FieldRef Name="AdditionalInfo" width="216.8455810546875" />
+                <FieldRef Name="ActionValue" width="209.8409423828125" />
+                <FieldRef Name="ActionUrl" width="197.83642578125" />
+                <FieldRef Name="Action" width="139.98638916015625" />
+                <FieldRef Name="QueryText" width="197.0091552734375" />
+                <FieldRef Name="LinkTitle" width="353.15000915527344" />
+                <FieldRef Name="SearchGroup" width="332.3727722167969" />
+                <FieldRef Name="QueryId" width="332.0091247558594" />
+              </ColumnWidth>
+            </View>
+          </pnp:Views>
+          <pnp:Fields>
+            <Field DisplayName="QueryId" Format="Dropdown" IsModern="TRUE" MaxLength="255" Name="QueryId" Title="QueryId" Type="Text" ID="{5a61b47b-03b3-4176-86c1-5fb79b14c1ca}" SourceID="{{listid:Search Analytics}}" StaticName="QueryId" ColName="nvarchar11" RowOrdinal="0" />
+            <Field DisplayName="Source" Format="Dropdown" IsModern="TRUE" MaxLength="255" Name="Source" Title="Source" Type="Text" ID="{c15441e9-fc7e-4cf0-b8ab-011665d12fcc}" SourceID="{{listid:Search Analytics}}" StaticName="Source" ColName="nvarchar7" RowOrdinal="0" />
+            <Field Name="URL" FromBaseType="FALSE" Type="Note" DisplayName="URL" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" ID="{21678ed3-043c-4d1f-8eca-ce02796e187c}" Version="1" StaticName="URL" SourceID="{{listid:Search Analytics}}" ColName="ntext6" RowOrdinal="0" />
+            <Field DisplayName="Action" Format="Dropdown" IsModern="TRUE" MaxLength="255" Name="Action" Title="Action" Type="Text" ID="{88d02641-eef8-4e17-9fd6-99de252e31b3}" SourceID="{{listid:Search Analytics}}" StaticName="Action" ColName="nvarchar9" RowOrdinal="0" />
+            <Field ClientSideComponentId="00000000-0000-0000-0000-000000000000" DisplayName="Query Text" Format="Dropdown" MaxLength="255" Name="QueryText" Title="Query Text" Type="Text" ID="{e16abee1-fa14-4fcd-94e8-ad096ecae255}" Version="2" StaticName="QueryText" SourceID="{{listid:Search Analytics}}" ColName="nvarchar10" RowOrdinal="0" />
+            <Field ClientSideComponentId="00000000-0000-0000-0000-000000000000" CommaSeparator="TRUE" CustomUnitOnRight="TRUE" Decimals="0" DisplayName="Result Count" Format="Dropdown" Name="ResultCount" Percentage="FALSE" Title="Result Count" Type="Number" Unit="None" ID="{701bff15-3f5a-42b1-be83-46bed63f4626}" Version="2" StaticName="ResultCount" SourceID="{{listid:Search Analytics}}" ColName="float1" RowOrdinal="0" />
+            <Field CommaSeparator="TRUE" CustomUnitOnRight="TRUE" Decimals="0" DisplayName="Page" Format="Dropdown" IsModern="TRUE" Min="0" Name="Page" Percentage="FALSE" Title="Page" Type="Number" Unit="None" ID="{9b1212d1-112b-462b-bfa7-90bc7be416d5}" SourceID="{{listid:Search Analytics}}" StaticName="Page" ColName="float2" RowOrdinal="0" />
+            <Field AppendOnly="FALSE" DisplayName="Action Url" Format="Dropdown" IsModern="TRUE" IsolateStyles="FALSE" Name="ActionUrl" RichText="FALSE" RichTextMode="Compatible" Title="Action Url" Type="Note" ID="{a48d6379-5d18-4455-a032-8f6630b6d1dc}" SourceID="{{listid:Search Analytics}}" StaticName="ActionUrl" ColName="ntext2" RowOrdinal="0" />
+            <Field AppendOnly="FALSE" DisplayName="Action Value" Format="Dropdown" IsModern="TRUE" IsolateStyles="FALSE" Name="ActionValue" RichText="FALSE" RichTextMode="Compatible" Title="Action Value" Type="Note" ID="{a0babad5-b171-46a8-8f9c-df9cb0bc836e}" SourceID="{{listid:Search Analytics}}" StaticName="ActionValue" ColName="ntext3" RowOrdinal="0" />
+            <Field AppendOnly="FALSE" DisplayName="Properties" Format="Dropdown" IsModern="TRUE" IsolateStyles="FALSE" Name="Properties" RichText="FALSE" RichTextMode="Compatible" Title="Properties" Type="Note" ID="{d44bf95a-943d-49f3-a107-4366d8e75f71}" SourceID="{{listid:Search Analytics}}" StaticName="Properties" ColName="ntext4" RowOrdinal="0" />
+            <Field Type="Note" DisplayName="Additional Info" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" ID="{a03b7683-c67c-4a47-ba68-496e6fdba347}" SourceID="{{listid:Search Analytics}}" StaticName="AdditionalInfo" Name="AdditionalInfo" ColName="ntext5" RowOrdinal="0" CustomFormatter="" RestrictedMode="TRUE" RichTextMode="Compatible" IsolateStyles="FALSE" AppendOnly="FALSE" Version="1" />
+          </pnp:Fields>
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="fa564e0f-0c70-4ab9-b863-0177e6ddd247" Name="Title" DisplayName="Title" />
+            <pnp:FieldRef ID="76d13cd2-1bae-45a5-8b74-545b87b65037" Name="_ColorTag" DisplayName="Color Tag" />
+          </pnp:FieldRefs>
+          <pnp:Webhooks>
+            <pnp:Webhook ServerNotificationUrl="https://northeurope0-2.pushnp.svc.ms/notifications?token=19566f7d-81be-4141-9dc4-b2de8f8a1141%2Fb!l0C20NHnI0-MtKDXFA8vq296H7cFCF5JhNaQ7Mm8VwocAY3TjiYbTYcU49mfZKLi" ExpiresInDays="1" />
+          </pnp:Webhooks>
+        </pnp:ListInstance>
+      </pnp:Lists>
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>

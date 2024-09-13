@@ -9,7 +9,7 @@ import { Web } from "@pnp/sp/webs";
 import { IAnalyticsItem, IAnalyticsService } from "./IAnalyticsService";
 
 export interface IAnalyticsSession {
-   correlationId: string;
+   sessionId: string;
    timeAccessed: number;
 }
 
@@ -23,11 +23,15 @@ export class AnalyticsService implements IAnalyticsService {
    );
 
    public isEnabled: boolean = true;
+   public enabledOnlyWithQueryText: boolean = true;
    private _spSiteUrl: string;
    private _spListName: string;
    private _source: string;
    private _pageContext: PageContext;
    private _spHttpClient: SPHttpClient;
+   private _pageNumber: number = 0;
+   private _QueryId: string;
+   private _queryText: string;
 
    constructor(serviceScope: ServiceScope) {
       serviceScope.whenFinished(() => {
@@ -42,35 +46,35 @@ export class AnalyticsService implements IAnalyticsService {
    }
 
    private getStorageItem(key: string): IAnalyticsSession {
-      const item = localStorage.getItem(key)
-         ? (JSON.parse(localStorage.getItem(key)) as IAnalyticsSession)
+      const item = sessionStorage.getItem(key)
+         ? (JSON.parse(sessionStorage.getItem(key)) as IAnalyticsSession)
          : null;
 
       if (item) {
          const tenMinsAgo = new Date(Date.now() - 10 * 60 * 1000).getTime();
-         let correlationId = item.correlationId;
+         let sessionId = item.sessionId;
 
          // If the item is older than 10 minutes, create a new correlation ID - assume a new session after 10 mins of inactivity
          if (item.timeAccessed < tenMinsAgo) {
-            correlationId = crypto.randomUUID();
+            sessionId = crypto.randomUUID();
          }
 
          // Overwrite the time accessed
          const newItem = {
-            correlationId: correlationId,
+            sessionId: sessionId,
             timeAccessed: Date.now(),
          };
 
-         localStorage.setItem(key, JSON.stringify(newItem));
+         sessionStorage.setItem(key, JSON.stringify(newItem));
 
          return newItem;
       } else {
          const newItem = {
-            correlationId: crypto.randomUUID(),
+            sessionId: crypto.randomUUID(),
             timeAccessed: Date.now(),
          };
 
-         localStorage.setItem(key, JSON.stringify(newItem));
+         sessionStorage.setItem(key, JSON.stringify(newItem));
          return newItem;
       }
    }
@@ -78,23 +82,23 @@ export class AnalyticsService implements IAnalyticsService {
    public init(
       source: string,
       isEnabled: boolean,
+      enabledOnlyWithQueryText: boolean,
       spSiteUrl: string,
       spListName: string
    ): void {
       this.isEnabled = isEnabled;
+      this.enabledOnlyWithQueryText = enabledOnlyWithQueryText;
       this._spListName = spListName;
       this._spSiteUrl = spSiteUrl;
       this._source = source;
 
       console.debug(
-         "Analytics INIT",
+         "Search Analytics Init",
          source,
          this.isEnabled,
          this._spSiteUrl,
          this._spListName
       );
-
-      let session = this.getStorageItem(LOCAL_STORAGE_KEY);
    }
 
    /**
@@ -103,23 +107,84 @@ export class AnalyticsService implements IAnalyticsService {
     * @param properties event item properties
     */
    public async add(event: string, properties: IAnalyticsItem): Promise<void> {
+      if (!this.isEnabled) {
+         return;
+      }
+      if (this.enabledOnlyWithQueryText && !properties.QueryText) {
+         console.debug("SKIP Search Analytics - No QueryText");
+         return;
+      }
+
+      if (this._queryText != properties.QueryText) {
+         // start new search group
+         this._queryText = properties.QueryText;
+         this._QueryId = crypto.randomUUID();
+      }
+
+      properties.QueryId = this._QueryId;
+
       let session = this.getStorageItem(LOCAL_STORAGE_KEY);
-      properties.correlationId = session.correlationId;
+      properties.sessionId = session.sessionId;
+
+      if (properties.Page) {
+         this._pageNumber = properties.Page;
+      }
 
       const item = await this._addItemToSharePoint(event, properties);
+   }
 
-      console.debug("Analytics ADD", item);
+   public addResultHooks(HtmlDivElement: HTMLElement) {
+      const links = HtmlDivElement.querySelectorAll("a");
+
+      for (let i = 0; i < links.length; i++) {
+         const link = links[i];
+
+         // Ignore specific links
+         if (link.classList.contains("ignore")) {
+            continue;
+         }
+
+         const url = link.getAttribute("href");
+         link.setAttribute("data-href", url);
+         link.setAttribute("data-index", (i + 1).toString());
+         link.setAttribute("href", "#");
+
+         link.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            console.log(url);
+
+            let session = this.getStorageItem(LOCAL_STORAGE_KEY);
+
+            this._addItemToSharePoint("ResultClick", {
+               sessionId: session.sessionId,
+               QueryId: this._QueryId,
+               ActionUrl: url,
+               Action: "ResultClick",
+               Source: this._source || "",
+               ActionValue: link.getAttribute("data-index"),
+               Page: this._pageNumber,
+            });
+
+            location.href = url;
+         });
+      }
    }
 
    private async _addItemToSharePoint(
       event: string,
       item: IAnalyticsItem
    ): Promise<any> {
+      if (!this.isEnabled) {
+         return;
+      }
+
       const web = Web(this._spSiteUrl);
       const list = web.lists.getByTitle(this._spListName);
 
       const newItem = await list.items.add({
-         Title: item.correlationId,
+         Title: item.sessionId,
+         QueryId: item.QueryId,
          Source: this._source || "",
          URL: item.URL || this._pageContext.web.absoluteUrl,
          Action: event || "",
@@ -130,6 +195,8 @@ export class AnalyticsService implements IAnalyticsService {
          ActionValue: item.ActionValue || "",
          AdditionalInfo: item.Properties ? JSON.stringify(item.Properties) : "",
       });
+
+      console.debug("Analytics ADD", newItem);
 
       return newItem;
    }

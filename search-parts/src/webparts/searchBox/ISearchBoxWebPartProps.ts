@@ -96,4 +96,6 @@ export interface ISearchBoxWebPartProps extends IBaseWebPartProps {
     * Enable Information EXP analytics
     */
    enableAnalytics: boolean;
+
+   analyticsMustHaveQueryText: boolean;
 }

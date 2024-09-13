@@ -73,10 +73,7 @@ import SearchBoxContainer from "./components/SearchBoxContainer";
 import { ISearchBoxWebPartProps } from "./ISearchBoxWebPartProps";
 
 import { AnalyticsService } from "../../services/analyticsService/AnalyticsService";
-import {
-   IAnalyticsItem,
-   IAnalyticsService,
-} from "../../services/analyticsService/IAnalyticsService";
+import { IAnalyticsService } from "../../services/analyticsService/IAnalyticsService";
 
 const LogSource = "SearchBoxWebPart";
 
@@ -358,6 +355,10 @@ export default class SearchBoxWebPart
                   groupFields: [
                      PropertyPaneCheckbox("enableAnalytics", {
                         text: "Enable Analytics",
+                        checked: true,
+                     }),
+                     PropertyPaneCheckbox("analyticsMustHaveQueryText", {
+                        text: "Only log when search query text is present",
                         checked: true,
                      }),
                      PropertyPaneTextField("analyticsSiteUrl", {
@@ -873,6 +874,9 @@ export default class SearchBoxWebPart
          this.properties.enableAnalytics === null
             ? true
             : this.properties.enableAnalytics,
+         this.properties.analyticsMustHaveQueryText === null
+            ? true
+            : this.properties.analyticsMustHaveQueryText,
          this.properties.analyticsSiteUrl ||
             this.context.pageContext.site.absoluteUrl,
          this.properties.analyticsListName || "Search Analytics"

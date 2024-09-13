@@ -3,14 +3,17 @@ export interface IAnalyticsService {
    init(
       source: string,
       isEnabled: boolean,
+      enabledOnlyWithQueryText: boolean,
       spSiteUrl: string,
       spListName: string
    ): void;
    add(event: string, properties: IAnalyticsItem): void;
+   addResultHooks(HtmlDivElement: HTMLElement): void;
 }
 
 export interface IAnalyticsItem {
-   correlationId?: string;
+   sessionId?: string;
+   QueryId?: string;
    Source?: string;
    URL?: string;
    Action?: string;

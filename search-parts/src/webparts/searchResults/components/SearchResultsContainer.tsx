@@ -42,11 +42,7 @@ import { ISearchResultsContainerProps } from "./ISearchResultsContainerProps";
 import { ISearchResultsContainerState } from "./ISearchResultsContainerState";
 import styles from "./SearchResultsContainer.module.scss";
 
-import { AnalyticsService } from "../../../services/analyticsService/AnalyticsService";
-import {
-   IAnalyticsItem,
-   IAnalyticsService,
-} from "../../../services/analyticsService/IAnalyticsService";
+import { IAnalyticsService } from "../../../services/analyticsService/IAnalyticsService";
 
 const LogSource = "SearchResultsContainer";
 
@@ -169,6 +165,7 @@ export default class SearchResultsContainer extends React.Component<
                templateService={this.templateService}
                instanceId={this.props.instanceId}
                renderType={renderType}
+               analyticsService={this.analyticsService}
             />
          </SelectionZone>
       );
