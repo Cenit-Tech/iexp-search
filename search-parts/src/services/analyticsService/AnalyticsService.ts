@@ -32,6 +32,7 @@ export class AnalyticsService implements IAnalyticsService {
    private _pageNumber: number = 0;
    private _QueryId: string;
    private _queryText: string;
+   private _defaultQueryText: string;
 
    constructor(serviceScope: ServiceScope) {
       serviceScope.whenFinished(() => {
@@ -84,13 +85,15 @@ export class AnalyticsService implements IAnalyticsService {
       isEnabled: boolean,
       enabledOnlyWithQueryText: boolean,
       spSiteUrl: string,
-      spListName: string
+      spListName: string,
+      defaultQueryText?: string
    ): void {
       this.isEnabled = isEnabled;
       this.enabledOnlyWithQueryText = enabledOnlyWithQueryText;
       this._spListName = spListName;
       this._spSiteUrl = spSiteUrl;
       this._source = source;
+      if (defaultQueryText) this._defaultQueryText = defaultQueryText;
 
       console.debug(
          "Search Analytics Init",
@@ -112,6 +115,16 @@ export class AnalyticsService implements IAnalyticsService {
       }
       if (this.enabledOnlyWithQueryText && !properties.QueryText) {
          console.debug("SKIP Search Analytics - No QueryText");
+         return;
+      }
+      if (
+         this._defaultQueryText &&
+         properties.QueryText === this._defaultQueryText
+      ) {
+         console.debug(
+            "SKIP Search Analytics - QueryText is default - ",
+            this._defaultQueryText
+         );
          return;
       }
 

@@ -2942,6 +2942,7 @@ export default class SearchResultsWebPart
          AnalyticsService.ServiceKey,
          AnalyticsService
       );
+
       this.analyticsService.init(
          "Search Results",
          this.properties.enableAnalytics === null
@@ -2952,7 +2953,8 @@ export default class SearchResultsWebPart
             : this.properties.analyticsMustHaveQueryText,
          this.properties.analyticsSiteUrl ||
             this.context.pageContext.site.absoluteUrl,
-         this.properties.analyticsListName || "Search Analytics"
+         this.properties.analyticsListName || "Search Analytics",
+         this.properties.defaultQueryText
       );
       this.dynamicDataService.dynamicDataProvider =
          this.context.dynamicDataProvider;

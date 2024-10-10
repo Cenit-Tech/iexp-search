@@ -5,7 +5,8 @@ export interface IAnalyticsService {
       isEnabled: boolean,
       enabledOnlyWithQueryText: boolean,
       spSiteUrl: string,
-      spListName: string
+      spListName: string,
+      defaultQueryText?: string
    ): void;
    add(event: string, properties: IAnalyticsItem): void;
    addResultHooks(HtmlDivElement: HTMLElement): void;

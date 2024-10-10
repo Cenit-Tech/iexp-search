@@ -3,7 +3,7 @@
    "solution": {
       "name": "InformationEXP SharePoint Search Parts",
       "id": "de9128ed-d1a1-4c9d-8517-a734039f4c92",
-      "version": "4.13.2.2",
+      "version": "4.13.2.3",
       "includeClientSideAssets": true,
       "skipFeatureDeployment": true,
       "isDomainIsolated": false,
