@@ -158,9 +158,12 @@ export class AnalyticsService implements IAnalyticsService {
          }
 
          const url = link.getAttribute("href");
+         const target = link.getAttribute("target");
          link.setAttribute("data-href", url);
          link.setAttribute("data-index", (i + 1).toString());
          link.setAttribute("href", "#");
+
+         console.log("Add Click Event", url);
 
          link.addEventListener("click", (e) => {
             e.preventDefault();
@@ -179,7 +182,11 @@ export class AnalyticsService implements IAnalyticsService {
                Page: this._pageNumber,
             });
 
-            location.href = url;
+            if (target === "_blank") {
+               window.open(url, "_blank");
+            } else {
+               location.href = url;
+            }
          });
       }
    }
